@@ -10,8 +10,8 @@ class Product {
 
 class ShoppingMall {
   List<Product> productList = [];
-  List<Product> cartList = [];
   int totalPrice = 0;
+  List<String> totalName = [];
 
   void printProducts() {
     for (Product p in productList) {
@@ -79,22 +79,31 @@ class ShoppingMall {
       }
     }
     totalPrice += productPrice[productName.indexOf(inputPName)] * inputDemand;
+    totalName.add(inputPName);
   }
 
   void showTotal() {
-    print('장바구니에 $totalPrice원어치를 담으셨네요!');
-    print(totalPrice);
+    print('장바구니에 ${totalName.join(',')}(이)가 담겨있네요. 총 $totalPrice원 입니다!');
+  }
+
+  void clearCart() {
+    if (totalPrice > 0) {
+      totalPrice = 0;
+      print('장바구니를 초기화합니다.');
+    } else {
+      print('이미 장바구니가 비어있습니다.');
+    }
   }
 }
 
 void main() {
-  Product shirts = Product('셔츠', 1000);
-  Product pants = Product('바지', 5000);
-  Product skirt = Product('치마', 2000);
-  Product socks = Product('양말', 5000);
-  Product shoes = Product('신발', 5000);
-
   ShoppingMall mall = ShoppingMall();
+
+  Product shirts = Product('셔츠', 10000);
+  Product pants = Product('바지', 20000);
+  Product skirt = Product('치마', 30000);
+  Product socks = Product('양말', 1000);
+  Product shoes = Product('신발', 50000);
 
   mall.productList.add(shirts);
   mall.productList.add(skirt);
@@ -106,13 +115,13 @@ void main() {
 
   while (isOpen) {
     print(
-      '----------------------------------------------------------------------------------------------------',
+      '------------------------------------------------------------------------------------------------------------------------',
     );
     print(
-      '[1] 상품 목록 보기 / [2] 장바구니에 담기 / [3] 장바구니에 담긴 상품의 총 가격 보기 / [4] 프로그램 종료',
+      '[1] 상품 목록 보기 / [2] 장바구니에 담기 / [3] 장바구니에 담긴 상품의 총 가격 보기 / [4] 프로그램 종료 / [6] 장바구니 비우기',
     );
     print(
-      '----------------------------------------------------------------------------------------------------',
+      '------------------------------------------------------------------------------------------------------------------------',
     );
     var input = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
@@ -123,8 +132,37 @@ void main() {
     } else if (input == '3') {
       mall.showTotal();
     } else if (input == '4') {
-      print('이용해 주셔서 감사합니다 ~ 안녕히 가세요 !');
-      isOpen = false;
+      print('정말 종료하시겠습니까?');
+      print('[5] : 종료 / [그 외 입력] : 계속');
+      var check = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+      if (check != null) {
+        if (check == '5') {
+          print('이용해 주셔서 감사합니다 ~ 안녕히 가세요 !');
+          isOpen = false;
+        } else {
+          print('종료하지 않습니다.');
+          continue;
+        }
+      } else {
+        continue;
+      }
+    } else if (input == '6') {
+      print('장바구니를 초기화하시겠습니까?');
+      print('[6] : 확인 / [그 외 입력] : 취소');
+      var check = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+      if (check != null) {
+        if (check == '6') {
+          mall.clearCart();
+        } else {
+          print('취소했습니다.');
+          continue;
+        }
+      } else {
+        print('지원하지 않는 기능입니다 ! 다시 시도해 주세요 . .');
+        continue;
+      }
+    } else {
+      print('지원하지 않는 기능입니다 ! 다시 시도해 주세요 . .');
     }
   }
 }
