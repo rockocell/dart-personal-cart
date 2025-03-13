@@ -33,19 +33,12 @@ class ShoppingMall {
     //유효한 상품명을 받을 때까지 반복
     while (true) {
       var input = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+      bool isProduct = pName.any((n) => n == input);
 
-      //인풋이 유효한지
-      if (input != null) {
-        bool isProduct = pName.any((n) => n == input);
-        //프로덕트명이 유효한지
-        if (isProduct == true) {
-          name = input;
-          break;
-        } else {
-          print('입력값이 올바르지 않아요!');
-          print('입력 가능한 상품명은 $pName 이에요.');
-          continue;
-        }
+      //프로덕트명이 유효한지
+      if (input != null && isProduct == true) {
+        name = input;
+        break;
       } else {
         print('입력값이 올바르지 않아요!');
         print('입력 가능한 상품명은 $pName 이에요.');
@@ -58,25 +51,20 @@ class ShoppingMall {
     //유효한 수량을 받을 때까지 반복
     while (true) {
       var input = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
-      //인풋이 유효한지
-      if (input != null) {
-        //인풋이 정수타입인지
-        if (int.tryParse(input) != null) {
-          if (int.parse(input) > 0) {
-            demand = int.parse(input);
-            break;
-          } else {
-            print('입력값이 올바르지 않아요!');
-            print('0개보다 많은 개수의 상품만 담을 수 있어요 !');
-            continue;
-          }
+
+      //인풋이 정수타입인지
+      if (input != null && int.tryParse(input) != null) {
+        if (int.parse(input) > 0) {
+          demand = int.parse(input);
+          break;
         } else {
           print('입력값이 올바르지 않아요!');
-          print('수량은 1 이상의 정수여야 해요.');
+          print('0개보다 많은 개수의 상품만 담을 수 있어요 !');
           continue;
         }
       } else {
         print('입력값이 올바르지 않아요!');
+        print('수량은 1 이상의 정수여야 해요.');
         continue;
       }
     }
@@ -99,7 +87,7 @@ class ShoppingMall {
 
     //장바구니 수량이 1 이상인 상품이 하나라도 있는지
     if (pAmount.any((n) => n > 0)) {
-      totalPrice = 0;
+      totalPrice = 0; //totalPrice 초기화
       print('장바구니 목록');
       for (int i = 0; i < pName.length; i++) {
         if (pPrice[i] * pAmount[i] > 0) {
