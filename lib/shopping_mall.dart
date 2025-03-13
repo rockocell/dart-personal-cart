@@ -48,14 +48,14 @@ class ShoppingMall {
 
     print('상품 수량을 입력해 주세요!');
 
-    //유효한 수량을 받을 때까지 반복
     while (true) {
       var input = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-      //인풋이 정수타입인지
-      if (input != null && int.tryParse(input) != null) {
-        if (int.parse(input) > 0) {
-          demand = int.parse(input);
+      //예외 발생을 위해 int.parse()를 바로 사용
+      if (input != null) {
+        demand = int.parse(input); // 예외 발생 가능
+
+        if (demand > 0) {
           break;
         } else {
           print('입력값이 올바르지 않아요!');
@@ -64,7 +64,6 @@ class ShoppingMall {
         }
       } else {
         print('입력값이 올바르지 않아요!');
-        print('수량은 1 이상의 정수여야 해요.');
         continue;
       }
     }

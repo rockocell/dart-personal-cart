@@ -55,7 +55,8 @@ void main() {
       try {
         mall.addToCart();
       } catch (e) {
-        print('입력값이 올바르지 않아요!');
+        print('예외 발생 : 입력값이 올바르지 않아요!');
+        print('장바구니에 담기를 종료합니다.');
       }
     } else if (input == '3') {
       mall.showTotal();
