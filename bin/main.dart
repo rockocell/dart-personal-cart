@@ -51,13 +51,23 @@ void main() {
     if (input == '1') {
       mall.printProducts();
     } else if (input == '2') {
-      mall.addToCart();
+      //예외 처리
+      try {
+        mall.addToCart();
+      } catch (e) {
+        print('입력값이 올바르지 않아요!');
+      }
     } else if (input == '3') {
       mall.showTotal();
     } else if (input == '4') {
       mall.exit();
     } else if (input == '6') {
-      mall.clearCart();
+      //예외 처리
+      try {
+        mall.clearCart();
+      } catch (e) {
+        print(e);
+      }
     } else {
       print('지원하지 않는 기능입니다 ! 다시 시도해 주세요 . .');
     }

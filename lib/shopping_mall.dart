@@ -111,16 +111,16 @@ class ShoppingMall {
     var check = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
     if (check != null && check == '6') {
-      if (totalPrice > 0) {
-        // 모든 Product의 amount를 0으로 초기화
-        for (var product in productList) {
-          product.amount = 0;
-        }
-        totalPrice = 0;
-        print('장바구니를 초기화합니다.');
-      } else {
-        print('이미 장바구니가 비어있습니다.');
+      if (totalPrice == 0) {
+        throw Exception('이미 장바구니가 비어있습니다.');
       }
+
+      // 모든 Product의 amount를 0으로 초기화
+      for (var product in productList) {
+        product.amount = 0;
+      }
+      totalPrice = 0;
+      print('장바구니를 초기화합니다.');
     } else {
       print('취소했습니다.');
     }
